@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="saveReminder(form.value)" *ngIf="!isLoading">
+      <mat-form-field>
+        <input matInput type="text" formControlName="title" placeholder="Title">
+        <mat-error *ngIf="form.get('title').invalid">Please enter a title.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput type="text" formControlName="message" placeholder="Message">
+          <mat-error *ngIf="form.get('message').invalid">Please enter a message.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput mat-raised-button type="text" placeholder="Date and time:"
+                  formControlName="remindAt"
+                  [owlDateTime]="dt" [owlDateTimeTrigger]="dt">
+                <mat-icon matSuffix [owlDateTimeTrigger]="dt">calendar_today</mat-icon>
+          <owl-date-time #dt></owl-date-time>
+      </mat-form-field>
+      <button mat-raised-button color="accent" type="submit">Save Reminder</button>
+    </form>
+  </mat-card>

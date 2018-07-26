@@ -1,0 +1,28 @@
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep owl-date-time-container {
+  width: 75%;
+  margin: 10px auto;
+}
+
+
+.relativeCont {
+  position: relative;
+}
+.onBellow,
+.onTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.onTop {
+  z-index: 10;
+}
+
+.remindersCont {
+  padding-top: 60px;
+}
+

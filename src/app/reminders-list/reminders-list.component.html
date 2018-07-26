@@ -1,0 +1,43 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div *ngIf="reminders | async as reminders">
+
+  <div class="relativeCont">
+    <input matInput mat-raised-button type="text" placeholder="Date and time:" class="onTop"
+      [owlDateTime]="dt" [owlDateTimeTrigger]="dt"
+        (dateTimeChange)="filterReminders($event.value)" style="opacity: 0; filter: alpha(opacity=0); ">
+
+    <mat-button-toggle-group aria-label="Font Style" class="onBellow center mt10 mb10">
+      <mat-button-toggle [owlDateTimeTrigger]="dt">Filter by Day</mat-button-toggle>
+      <mat-button-toggle (click)="returnNotFilteredReminders()">Show all</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+    <owl-date-time pickerType="calendar" #dt></owl-date-time>
+  <div class="remindersCont">
+
+    <ng-container  *ngIf="reminders.length && !isLoading; else noReminders">
+      <mat-accordion multi="true">
+        <mat-expansion-panel *ngFor="let r of reminders">
+          <mat-expansion-panel-header>
+            <span> {{ r.remindAt | date:'shortTime' }} | {{ r.title }} </span>
+          </mat-expansion-panel-header>
+          <p>{{ r.message }}</p>
+          <hr>
+          <p>Time: {{ r.remindAt | date:'shortTime' }}</p>
+          <p>Date: {{ r.remindAt | date:'mediumDate' }}</p>
+          <mat-action-row *ngIf="userIsAuthenticated">
+            <a mat-button color="primary" [routerLink]="['/edit', r.id]">EDIT</a>
+            <button mat-button color="warn" (click)="deleteReminder(r.id)">DELETE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </ng-container>
+  </div>
+<ng-template #noReminders>
+    <mat-action-row>
+        There are no reminders yet!
+    </mat-action-row>
+</ng-template>
+</div>
+
